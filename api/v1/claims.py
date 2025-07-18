@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import gaussian_kde
 
-from models.schemas import ClaimAmountDensityItem  # you’ll need a new schema if you change the shape
+from models.schemas import ClaimAmountDensityItem
 from dependencies.auth import verify_sanctum_token
 from dependencies.db import get_db
 from dependencies.cache import cache
@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get(
     "/claims-distribution",
-    response_model=Dict[str, Any],  # adjust or create a new Pydantic model if you want strict typing
+    response_model=Dict[str, Any],
 )
 async def get_claim_amount_density_and_correlation(
     user_id: int = Depends(verify_sanctum_token),
@@ -37,6 +37,7 @@ async def get_claim_amount_density_and_correlation(
 
     # 2. build DataFrame
     df = pd.DataFrame(records)
+    
     # rename as you already do
     df = df.rename(columns={"Category": "category", "Claim_Amount_KES": "claim_amount"})
     tiers = ["Gold", "Platinum", "Silver"]

@@ -26,6 +26,7 @@ async def upload_data(
         # serialize to JSON records
         json_str = df.reset_index(drop=True) \
                      .to_json(orient="records", date_format="iso")
+        
         cache_key = f"raw_data:user:{user_id}"
         cache.set(cache_key, json_str, ex=CACHE_TTL)
 

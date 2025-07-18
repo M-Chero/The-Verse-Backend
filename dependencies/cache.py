@@ -5,10 +5,10 @@ from urllib.parse import urlparse
 
 load_dotenv()
 
-# REDIS_HOST = os.getenv("REDIS_HOST")
-# REDIS_PORT = int(os.getenv("REDIS_PORT"))
-# REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
-# REDIS_DB = int(os.getenv("REDIS_CACHE_DB", 1))
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = int(os.getenv("REDIS_PORT"))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
+REDIS_DB = int(os.getenv("REDIS_CACHE_DB", 1))
 
 CACHE_TTL = int(os.getenv("SESSION_LIFETIME", 120)) * 60 
 
