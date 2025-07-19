@@ -6,6 +6,7 @@ from dependencies.cache import cache
 import json
 import pandas as pd
 from utils.train_model_formula import train_model_formula
+import traceback
 
 router = APIRouter()
 
@@ -14,11 +15,6 @@ class TrainResult(BaseModel):
     MAE: float
     RMSE: float
     R2: float
-
-
-class TrainModelResponse(BaseModel):
-    message: str
-    results: List[TrainResult]
 
 @router.get(
     "/train-model",
@@ -63,6 +59,10 @@ async def train_model(
         raise HTTPException(status_code=400, detail="No Result")
 
     # Convert to JSON-able list of dicts
-    recs = results_df.to_dict(orient="records")
+    try:
+        recs = results_df.to_dict(orient="records")
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Return results failed: {e}")
 
     return recs
